@@ -1,47 +1,50 @@
-const square = document.querySelectorAll('.square');
-const mole = document.querySelectorAll('.mole');
-const timeLeft = document.querySelector('#time-left');
-let score = document.getElementById('score');
+const scoreEl = document.getElementById('score');
+const timeLeftEl = document.getElementById('time-left');
 
-let result = 0;
-let currentTime = timeLeft.textContent;
+let score = 0
+let timeLeft = timeLeftEl.textContent;
 
-function randomSquare() {
-  square.forEach(className => {
-    className.classList.remove('mole');
-  })
-  let randomPosition = square[Math.floor(Math.random() * 9)];
-  randomPosition.classList.add('mole');
+const squares = document.querySelectorAll('.square');
 
-  //assign the id of the randomPosition to hitPosition for us to use later
-  hitPosition = randomPosition.id;
+squares.forEach(square => {
+  square.addEventListener('mouseup', whack)
+});
+
+function whack() {
+  if (this.classList.contains('mole')) {
+    score += 1;
+    scoreEl.textContent = score;
+  }
 }
 
-square.forEach(id => {
-  id.addEventListener('mouseup', () => {
-    if(id.id === hitPosition) {
-      result += 1;
-      score.textContent = result;
-    }
-  })
-});
+
+function randomMole() {
+  squares.forEach(square => {
+    square.classList.remove('mole');
+  });
+  const randomPosition = Math.floor(Math.random()*9);
+  let randomSquare = squares[randomPosition];
+  randomSquare.classList.add('mole');
+}
 
 function moveMole() {
   let timerId = null;
-  timerId = setInterval(randomSquare, 1000);
+  timerId = setInterval(randomMole, 1000);
 }
 
 function countdown() {
-    currentTime--
-    timeLeft.textContent = currentTime
-
-    if (currentTime === 0) {
-      clearInterval(timerId);
-      alert('GAME OVER! Your final score is ' + result);
-    }
+  timeLeft--;
+  timeLeftEl.textContent = timeLeft;
+  if (timeLeft === 0) {
+    clearInterval(mainTimer);
+    alert(`Time's up! Your score was ${score}. Reload the page to play again!`);
+    score = 0;
+    scoreEl.textContent = score; 
+    squares.forEach(square => {square.classList.remove('square')});
+  }
 }
 
-let timerId = setInterval(countdown, 1000);
+let mainTimer = null;
+mainTimer = setInterval(countdown, 1000);
 
 moveMole();
-

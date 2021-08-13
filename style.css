@@ -8,22 +8,38 @@
   width: extend-to-zoom;
 }
 
+body {
+  background-image: url(./north_dakota_prairie_rick_bohn_usfws_header.jpeg);
+  background-size: cover;
+}
+
+h1, h2, h4 {
+  margin: 25px auto;
+  width: fit-content;
+  font-family: Georgia, 'Times New Roman', Times, serif
+}
+
+h4 {
+  padding: 0 30px;
+}
+
 .square {
   width: 100px;
   height: 100px;
-  border: solid black 1px;
+  border: 1px solid black;
+  border-radius: 100%;
+  background-color: sienna;
 }
 
 .grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  align-content: center;
-  width: 318px;
-  height: 318px;
+  margin: 5em auto;
+  height: 306px;
+  width: 306px;
 }
 
 .mole {
-  background-image: url('mole.jpg');
+  background-image: url("./mole.jpg");
   background-size: cover;
 }
